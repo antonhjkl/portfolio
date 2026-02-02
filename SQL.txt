@@ -1,0 +1,49 @@
+-- ============================================
+-- ПРОВЕРКА: Подсчет количества занятий учителя
+-- Цель теста: Верификация данных в отчете "Нагрузка преподавателя"
+-- Сценарий: Проверить, что количество занятий учителя Krauze на 30.08.2019 
+--           в базе данных совпадает с данными в UI отчете
+-- ============================================
+
+SELECT 
+    t.id AS teacher_id,
+    CONCAT(t.last_name, ' ', t.first_name) AS teacher_full_name,
+    s.date,
+    COUNT(*) AS lessons_count
+FROM Schedule s
+JOIN Teacher t ON s.teacher = t.id
+WHERE t.last_name = 'Krauze'
+  AND s.date = '2019-08-30'
+GROUP BY t.id, t.last_name, t.first_name, s.date;
+
+-- ============================================
+-- ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ НА ОСНОВЕ ЭТОГО ЖЕ СЦЕНАРИЯ:
+-- ============================================
+
+-- 1. Проверка на дублирование записей в расписании
+SELECT 
+    t.last_name,
+    s.date,
+    s.time_slot,
+    COUNT(*) as duplicate_count
+FROM Schedule s
+JOIN Teacher t ON s.teacher = t.id
+WHERE t.last_name = 'Krauze'
+  AND s.date = '2019-08-30'
+GROUP BY t.last_name, s.date, s.time_slot
+HAVING COUNT(*) > 1;
+
+-- 2. Проверка на пересечение занятий (если учитель не может вести 2 занятия одновременно)
+SELECT 
+    t.last_name,
+    s1.date,
+    s1.time_slot as slot1,
+    s2.time_slot as slot2
+FROM Schedule s1
+JOIN Schedule s2 ON s1.teacher = s2.teacher 
+    AND s1.date = s2.date 
+    AND s1.time_slot < s2.time_slot
+    AND s1.time_slot + INTERVAL '1 hour' > s2.time_slot  -- если занятия длятся 1 час
+JOIN Teacher t ON s1.teacher = t.id
+WHERE t.last_name = 'Krauze'
+  AND s1.date = '2019-08-30';
