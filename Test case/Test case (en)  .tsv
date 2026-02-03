@@ -1,0 +1,12 @@
+Project		intern.demoshopping.ru		
+Date		03.02.2026		
+Version		1.0		
+Tester		Fedorov Anton		
+Environment		Windows 11 25H2 assembly 26200.7623  Google chrome Version: 144.0.7559.110 (64 bit)		
+				
+Key	Task type	Resume	Description	Images
+ID1	Bug	Sorting products in ascending order displays prices in descending order, and sorting products in descending order displays prices in ascending order	Open [https://intern.demoshopping.ru/] Apply sorting in ascending order Actual result: Sorting in descending order is applied Expected result: Sorting in ascending order is applied Apply sorting in descending order Actual result: Sorting in ascending order is applied Expected result: Sorting in descending order is applied	ID1.1.png ID1.2.png 
+ID2	Bug	Filtering the product list: When filtering the price from 0 to 49, the site shows an empty page without an appropriate notification	Open [https://intern.demoshopping.ru/] Enter minimum price 0 Enter maximum price 49 Click on the "Apply Filters" button Actual result: The site displays a page without products, without a notification that there are no products Expected result: The site displays a corresponding notification about the absence of products	ID2.png
+ID3	Bug	Adding products to the cart: a product with a quantity <=0 is added to the cart	Open the site [https://intern.demoshopping.ru/] In the product quantity field, select <=0 Click "Add to Cart" Actual result: A product with quantity <=0 is added to the cart Expected result: A product with quantity <=0 is not added to the cart, an error message appears	ID3.1.png ID3.2.png
+ID4	Bug	Viewing the product list: some products are missing an image	Open [https://intern.demoshopping.ru/] Go to the 2nd, 6th, 9th, 10th page of the catalog Actual result: The image of some products is not displayed Expected result: The image of some products is correctly displayed on the 2nd, 6th, 9th, 10th page of the online store	ID4.1.png ID4.2.png ID4.3.png ID4.4.png
+ID5	Bug	Checking authorization: After clicking the login link, the user is not redirected to the login page	Preconditions: the user is not authorized in the system  Open [https://intern.demoshopping.ru/] Click on the tab "Cart", "Payment" or "Order History" In the message about the need for authorization, click on the link "Log in" [https://intern.demoshopping.ru/] Actual result: The user remains on the main page. The transition to the Login page does not occur Expected result: The user is redirected to the login page after clicking on the link  	ID5.png
